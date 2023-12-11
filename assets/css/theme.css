@@ -6012,8 +6012,9 @@ body {
 }
 
 #map {
-  margin: 80px 0;
+  margin: 80px 2px;
   background-color: lightgray;
+  height: 650px;
   position: relative;
 }
 #map img {
@@ -6052,21 +6053,17 @@ body {
   border-radius: 8px;
   margin-bottom: 20px;
 }
-#map .box-content h3 {
+#map .landing-box .box-content h3 {
   margin-bottom: 1rem;
 }
-#map .box-content .note {
+#map .landing-box .box-content .note {
   font-size: 90%;
   font-style: italic;
 }
-#map .block-map {
-  height: 650px;
-}
-#map .block-map iframe {
+#map iframe {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 #map .box-shadow {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
