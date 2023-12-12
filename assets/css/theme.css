@@ -6062,6 +6062,8 @@ body {
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 20px;
+  height: 320px;
+  overflow: scroll;
 }
 .page-section.section-map .landing-box .box-content h3 {
   margin-bottom: 1rem;

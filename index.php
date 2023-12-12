@@ -3,6 +3,10 @@
 <head>
     <link rel="stylesheet" href="assets/css/fontawesome-all.css">
     <link rel="stylesheet" href="assets/css/theme.css">
+    <script src="https://polyfill.io/v3/polyfill.js?features=default"></script>
+    <script>
+        var io_base_url = 'http://localhost/learning/christmas-markets/';
+    </script>
 </head>
 
 <body>
@@ -43,7 +47,6 @@
     </div>
 
     <script src="assets/js/map.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6oq92figYRhKvO7jz4GKPIvJVncWkZY&callback=initMap">
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&callback=ioInitMap&key=AIzaSyAo6oq92figYRhKvO7jz4GKPIvJVncWkZY"></script>
 
 </body>
