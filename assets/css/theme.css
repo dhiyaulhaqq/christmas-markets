@@ -6034,8 +6034,7 @@ body {
 .page-section.section-map .floating-content {
   position: absolute;
   top: 0;
-  width: 100%;
-  padding: 20px;
+  margin: 20px;
 }
 .page-section.section-map .floating-box {
   max-width: 650px;
