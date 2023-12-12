@@ -52,18 +52,28 @@ body {
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .search {
-            & {
-                display: flex;
-            }
-            .fa-solid {
-                font-size: 120%;
-            }
+        input {
+            padding: 6px 12px;
+            border: none;
         }
-        .filter {
-            .btn {
-                width: 20%;
-            }
+        .fa-solid {
+            font-size: 120%;
+        }
+        .btn {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+    .block-hor {
+        & {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .block-thumb {
+            margin-right: 8px;
+        }
+        .item:not(:last-child) {
+            margin-right: 8px;
         }
     }
     .box {

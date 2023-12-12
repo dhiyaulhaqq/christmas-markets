@@ -6035,14 +6035,26 @@ body {
   border-radius: 8px;
   margin-bottom: 20px;
 }
-#map .control-box .search {
-  display: flex;
+#map .control-box input {
+  padding: 6px 12px;
+  border: none;
 }
-#map .control-box .search .fa-solid {
+#map .control-box .fa-solid {
   font-size: 120%;
 }
-#map .control-box .filter .btn {
-  width: 20%;
+#map .control-box .btn {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+#map .block-hor {
+  display: flex;
+  flex-wrap: wrap;
+}
+#map .block-hor .block-thumb {
+  margin-right: 8px;
+}
+#map .block-hor .item:not(:last-child) {
+  margin-right: 8px;
 }
 #map .box {
   border-radius: 8px;

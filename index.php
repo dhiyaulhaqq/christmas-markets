@@ -13,17 +13,17 @@
         <div class="floating-content">
             <div class="floating-box">
                 <div class="control-box box-shadow">
-                    <div class="search d-flex mb-3">
-                        <div class="border border-primary rounded-lg d-flex bg-white w-100 mr-2">
-                            <input type="text" class="form-control border-white" placeholder="Click the target or type a location">
+                    <div class="search d-flex flex-wrap justify-content-center">
+                        <div class="border border-primary rounded-lg d-flex flex-fill bg-white px-1 mr-2 mb-3">
+                            <input type="text" class="flex-fill border-white" placeholder="Click the target or type a location">
                             <button class="btn"><i class="fa-solid fa-location-crosshairs"></i></button>
                         </div>
-                        <button class="btn bg-white border-primary w-25 rounded-pill"><i class="fa-solid fa-location-dot mr-2"></i>Saved (0)</button>
+                        <button class="btn bg-white border-primary rounded-pill mb-3"><i class="fa-solid fa-location-dot mr-2"></i>Saved (0)</button>
                     </div>
-                    <div class="filter">
-                        <button class="btn bg-white border-primary rounded-pill">Open Now</button>
-                        <button class="btn bg-white border-primary rounded-pill">Filter Date</button>
-                        <button class="btn bg-white border-primary rounded-pill">Reset Map</button>
+                    <div class="filter block-hor">
+                        <button class="btn bg-white border-primary rounded-pill item">Open Now</button>
+                        <button class="btn bg-white border-primary rounded-pill item">Filter Date</button>
+                        <button class="btn bg-white border-primary rounded-pill item">Reset Map</button>
 
                     </div>
                 </div>
