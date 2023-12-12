@@ -26,42 +26,72 @@ body {
     padding: 0;
 }
 
-#map {
+.page-section {
     & {
-        margin: 80px 2px;
-        background-color: lightgray;
-        height: 650px;
+        padding: 64px 0;
         position: relative;
     }
-    img {
-        max-width: 100%;
-    }
-    .floating-content {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        padding: 20px;
-    }
-    .floating-box {
-        max-width: 650px;
-    }
-    .control-box {
+    &.section-map {
         & {
-            background: aliceblue;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 0;
+            margin: 80px 2px;
+            background-color: lightgray;
+            height: 650px;
+            position: relative;
         }
-        input {
-            padding: 6px 12px;
-            border: none;
+        img {
+            max-width: 100%;
         }
-        .fa-solid {
-            font-size: 120%;
+        .floating-content {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px;
         }
-        .btn {
-            padding-left: 16px;
-            padding-right: 16px;
+        .floating-box {
+            max-width: 650px;
+        }
+        .control-box {
+            & {
+                background: aliceblue;
+                padding: 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+            input {
+                padding: 6px 12px;
+                border: none;
+            }
+            .fa-solid {
+                font-size: 120%;
+            }
+            .btn {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+
+        .landing-box {
+            & {
+                background-color: white;
+                padding: 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+            .box-content {
+                h3 {
+                    margin-bottom: 1rem;
+                }
+                .note {
+                    font-size: 90%;
+                    font-style: italic;
+                }
+            }
+        }
+        iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
     }
     .block-hor {
@@ -78,28 +108,6 @@ body {
     }
     .box {
         border-radius: 8px;
-    }
-    .landing-box {
-        & {
-            background-color: white;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .box-content {
-            h3 {
-                margin-bottom: 1rem;
-            }
-            .note {
-                font-size: 90%;
-                font-style: italic;
-            }
-        }
-    }
-    iframe {
-        position: absolute;
-        width: 100%;
-        height: 100%;
     }
     .box-shadow {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);

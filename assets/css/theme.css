@@ -6011,73 +6011,78 @@ body {
   padding: 0;
 }
 
-#map {
+.page-section {
+  padding: 64px 0;
+  position: relative;
+}
+.page-section.section-map {
+  padding: 0;
   margin: 80px 2px;
   background-color: lightgray;
   height: 650px;
   position: relative;
 }
-#map img {
+.page-section.section-map img {
   max-width: 100%;
 }
-#map .floating-content {
+.page-section.section-map .floating-content {
   position: absolute;
   top: 0;
   width: 100%;
   padding: 20px;
 }
-#map .floating-box {
+.page-section.section-map .floating-box {
   max-width: 650px;
 }
-#map .control-box {
+.page-section.section-map .control-box {
   background: aliceblue;
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-#map .control-box input {
+.page-section.section-map .control-box input {
   padding: 6px 12px;
   border: none;
 }
-#map .control-box .fa-solid {
+.page-section.section-map .control-box .fa-solid {
   font-size: 120%;
 }
-#map .control-box .btn {
+.page-section.section-map .control-box .btn {
   padding-left: 16px;
   padding-right: 16px;
 }
-#map .block-hor {
-  display: flex;
-  flex-wrap: wrap;
-}
-#map .block-hor .block-thumb {
-  margin-right: 8px;
-}
-#map .block-hor .item:not(:last-child) {
-  margin-right: 8px;
-}
-#map .box {
-  border-radius: 8px;
-}
-#map .landing-box {
+.page-section.section-map .landing-box {
   background-color: white;
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-#map .landing-box .box-content h3 {
+.page-section.section-map .landing-box .box-content h3 {
   margin-bottom: 1rem;
 }
-#map .landing-box .box-content .note {
+.page-section.section-map .landing-box .box-content .note {
   font-size: 90%;
   font-style: italic;
 }
-#map iframe {
+.page-section.section-map iframe {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-#map .box-shadow {
+.page-section .block-hor {
+  display: flex;
+  flex-wrap: wrap;
+}
+.page-section .block-hor .block-thumb {
+  margin-right: 8px;
+}
+.page-section .block-hor .item:not(:last-child) {
+  margin-right: 8px;
+}
+.page-section .box {
+  border-radius: 8px;
+}
+.page-section .box-shadow {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
 }
 
