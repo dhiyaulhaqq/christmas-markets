@@ -8,7 +8,6 @@
 <body>
     <div class="page-section section-map">
         <div id="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d4130971.4810411297!2d-0.7579433850719401!3d51.507400000000004!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1702285183996!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div class="floating-content">
             <div class="floating-box">
@@ -42,4 +41,9 @@
             </div>
         </div>
     </div>
+
+    <script src="assets/js/map.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6oq92figYRhKvO7jz4GKPIvJVncWkZY&callback=initMap">
+    </script>
+
 </body>
