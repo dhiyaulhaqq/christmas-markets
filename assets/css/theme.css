@@ -6031,19 +6031,14 @@ body {
 .page-section.section-map img {
   max-width: 100%;
 }
-.page-section.section-map .floating-content {
+.page-section.section-map .floating-container {
   position: absolute;
   top: 0;
   margin: 20px;
-}
-.page-section.section-map .floating-box {
   max-width: 650px;
 }
 .page-section.section-map .control-box {
   background: aliceblue;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
 }
 .page-section.section-map .control-box input {
   padding: 6px 12px;
@@ -6058,9 +6053,6 @@ body {
 }
 .page-section.section-map .landing-box {
   background-color: white;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
   height: 320px;
   overflow: scroll;
 }
@@ -6090,6 +6082,9 @@ body {
   border-radius: 8px;
 }
 .page-section .box-shadow {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
 }
 

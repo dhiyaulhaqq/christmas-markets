@@ -48,20 +48,15 @@ body {
         img {
             max-width: 100%;
         }
-        .floating-content {
+        .floating-container {
             position: absolute;
             top: 0;
             margin: 20px;
-        }
-        .floating-box {
             max-width: 650px;
         }
         .control-box {
             & {
                 background: aliceblue;
-                padding: 16px;
-                border-radius: 8px;
-                margin-bottom: 20px;
             }
             input {
                 padding: 6px 12px;
@@ -79,9 +74,6 @@ body {
         .landing-box {
             & {
                 background-color: white;
-                padding: 16px;
-                border-radius: 8px;
-                margin-bottom: 20px;
                 height: 320px;
                 overflow: scroll;
             }
@@ -117,6 +109,9 @@ body {
         border-radius: 8px;
     }
     .box-shadow {
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
     }
 }
