@@ -44,10 +44,7 @@
                     </div>
                 </div>
                 <div id="result-box" class="d-none">
-                    <div id="back-button" class="mb-3">
-                        <button class="btn btn-round" onclick="ioBackShowMoreLocations()">« Back to more locations</button>
-                    </div>
-                    <div id="marker-detail" class="scroll-y">
+                    <div id="marker-detail">
 
                     </div>
                 </div>

@@ -6066,29 +6066,36 @@ body {
 .page-section.section-map #landing-box .block-body h3 {
   margin-bottom: 1rem;
 }
-.page-section.section-map #marker-detail {
+.page-section.section-map #marker-detail .marker-detail {
   overflow-y: auto;
   overflow-x: hidden;
   height: 265px;
 }
-.page-section.section-map #marker-detail .block-thumb {
+.page-section.section-map #marker-detail .marker-detail .block-thumb {
   height: 220px;
   margin-bottom: 16px;
 }
-.page-section.section-map #marker-detail .block-thumb img {
+.page-section.section-map #marker-detail .marker-detail .block-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.page-section.section-map #marker-detail .marker-item {
-  display: flex;
+.page-section.section-map #marker-detail .marker-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 273px;
 }
-.page-section.section-map #marker-detail .marker-item .block-thumb {
+.page-section.section-map #marker-detail .marker-list .marker-item {
+  display: flex;
+  padding: 16px 0;
+  border-bottom: 1px solid #dedede;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .block-thumb {
   width: 100px;
   height: 100px;
   margin-right: 16px;
 }
-.page-section.section-map #marker-detail .marker-item .block-body {
+.page-section.section-map #marker-detail .marker-list .marker-item .block-body {
   flex-basis: min-content;
   flex-grow: 1;
 }

@@ -161,12 +161,10 @@ function ioAddMarkers(markerData) {
 const landingBox = document.getElementById('landing-box');
 const resultBox = document.getElementById('result-box');
 const markerDetail = document.getElementById('marker-detail');
-const backButton = document.getElementById('back-button');
 
 function ioShowMarkerDetail(id) {
    landingBox.classList.add("d-none");
    resultBox.classList.remove("d-none");
-   backButton.classList.remove("d-none");
 
    var data = iovars.xarkers.find(item => item.id == id);
 
@@ -180,12 +178,17 @@ function ioShowMarkerDetail(id) {
    }
 
    let content = `
-      ${detail_image}
-      <h5>${data.name}</h5>
-      <p>${data.address}</p>
-      <p>${data.description}</p>
-      <p class="note">Please note that this page should only be used as a guidance as Christmas market opening times may be subject to change during the festive season. We advise that you check the individual market's official website or contact the organisers directly for the most up-to-date timings.</p>
-   `;
+      <div id="back-button" class="mb-3">
+         <button class="btn btn-round" onclick="ioBackShowMoreLocations()">« Back to more locations</button>
+      </div>
+      <div class="marker-detail scroll-y">
+         ${detail_image}
+         <h5>${data.name}</h5>
+         <p>${data.address}</p>
+         <p>${data.description}</p>
+         <p class="note">Please note that this page should only be used as a guidance as Christmas market opening times may be subject to change during the festive season. We advise that you check the individual market's official website or contact the organisers directly for the most up-to-date timings.</p>
+      </div>
+      `;
 
    markerDetail.innerHTML = content;
 }
@@ -200,8 +203,6 @@ function ioResetMap() {
 }
 
 function ioBackShowMoreLocations() {
-   backButton.classList.add("d-none");
-
    let content = "";
    let detail_image = "";
    let imageUrl = "";
@@ -221,10 +222,20 @@ function ioBackShowMoreLocations() {
             <div class="block-body">
                <h5>${data.name}</h5>
                <p>${data.address}</p>
+               <button class="btn btn-round" onclick="ioShowMarkerDetail(${data.id})">View Detail</button>
             </div>
          </div>
-   `;
+         `;
    })
+
+   content = `
+   <div class="heading">
+      <h4>Christmas Markets near London, UK</h4>
+   </div>
+   <div class="marker-list scroll-y">
+      ${content}
+   </div>
+   `
 
    markerDetail.innerHTML = content;
 }
