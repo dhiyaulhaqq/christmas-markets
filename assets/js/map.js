@@ -147,13 +147,42 @@ function ioAddMarkers(markerData) {
 
       var marker = new google.maps.Marker(markerSettings);
 
-      // marker.addListener('click', function () {
-      //    ioShowMarkerDetail(data.id);
-      // });
+      marker.addListener('click', function () {
+         ioShowMarkerDetail(data.id);
+      });
 
       // markers.push(marker);
       iovars.xarkers.push(marker);
    });
 
    // ioShowMarkersList(markerData);
+}
+
+const landingBox = document.getElementById('landing-box');
+const resultBox = document.getElementById('result-box');
+const markerDetail = document.getElementById('marker-detail');
+
+function ioShowMarkerDetail(id) {
+   landingBox.classList.add("d-none");
+   resultBox.classList.remove("d-none");
+
+   var data = iovars.xarkers.find(item => item.id == id);
+
+   content = `
+      <h5>${data.name}</h5>
+      <p>${data.address}</p>
+      <p>${data.description}</p>
+      <p class="note">Please note that this page should only be used as a guidance as Christmas market opening times may be subject to change during the festive season. We advise that you check the individual market's official website or contact the organisers directly for the most up-to-date timings.</p>
+   `;
+
+   markerDetail.innerHTML = content;
+}
+
+// Reset map to initial state
+function ioResetMap() {
+   map.setCenter(iovars.init_loc);
+   map.setZoom(6);
+
+   landingBox.classList.remove("d-none");
+   resultBox.classList.add("d-none");
 }
