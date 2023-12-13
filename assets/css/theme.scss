@@ -76,8 +76,8 @@ body {
 
         .content-box {
             background-color: white;
-            height: 320px;
-            overflow-y: scroll;
+            height: 350px;
+            overflow-y: auto;
             overflow-x: hidden;
         }
 
@@ -94,9 +94,60 @@ body {
             }
         }
 
-        #result-box,
         #marker-detail {
-            width: 100%;
+            & {
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: 265px;
+            }
+            .block-thumb {
+                & {
+                    height: 220px;
+                    margin-bottom: 16px;
+                }
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            .marker-item {
+                & {
+                    display: flex;
+                }
+                .block-thumb {
+                    width: 100px;
+                    height: 100px;
+                    margin-right: 16px;
+                }
+                .block-body {
+                    flex-basis: min-content;
+                    flex-grow: 1;
+                }
+            }
+        }
+
+        .scroll-y {
+            &::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #dedede;
+                border: 0px none #ffffff;
+                border-radius: 69px;
+            }
+            &::-webkit-scrollbar-corner {
+                background: transparent;
+            }
+            &::-webkit-scrollbar-track {
+                background: transparent;
+                border: none;
+                border-radius: 100px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #1a105a;
+            }
         }
 
         iframe {
@@ -108,7 +159,6 @@ body {
     .block-hor {
         & {
             display: flex;
-            flex-wrap: wrap;
         }
         .block-thumb {
             margin-right: 8px;

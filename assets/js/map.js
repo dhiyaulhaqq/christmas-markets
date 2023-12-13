@@ -170,7 +170,17 @@ function ioShowMarkerDetail(id) {
 
    var data = iovars.xarkers.find(item => item.id == id);
 
+   var detail_image = "";
+   if (typeof data.imageIdList !== 'undefined' && typeof data.imageIdList[0] !== 'undefined') {
+      detail_image = io_sample_url + 'backend/assets/dynamic/' + data.imageIdList[0] + '-medium.jpg';
+   }
+
+   if (detail_image) {
+      detail_image = `<div class="block-thumb"><img src="${detail_image}" alt="${data.name} Image"></div>`;
+   }
+
    let content = `
+      ${detail_image}
       <h5>${data.name}</h5>
       <p>${data.address}</p>
       <p>${data.description}</p>
@@ -193,12 +203,26 @@ function ioBackShowMoreLocations() {
    backButton.classList.add("d-none");
 
    let content = "";
-   var listMarker = iovars.xarkers;
+   let detail_image = "";
+   let imageUrl = "";
+   let listMarker = iovars.xarkers;
 
    listMarker.forEach((data) => {
+      if (typeof data.imageIdList !== 'undefined' && typeof data.imageIdList[0] !== 'undefined') {
+         imageUrl = io_sample_url + 'backend/assets/dynamic/' + data.imageIdList[0] + '-small.jpg';
+      }
+
+      if (imageUrl) {
+         detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${data.name} Image"></div>`;
+      }
       content += `
-      <h5>${data.name}</h5>
-      <p>${data.address}</p>
+         <div class="marker-item">
+            ${detail_image}
+            <div class="block-body">
+               <h5>${data.name}</h5>
+               <p>${data.address}</p>
+            </div>
+         </div>
    `;
    })
 

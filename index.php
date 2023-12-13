@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="assets/css/theme.css">
     <script src="https://polyfill.io/v3/polyfill.js?features=default"></script>
     <script>
+        var io_sample_url = 'https://reptile2.developmentpath.co.uk/tui/christmas-markets/';
         var io_base_url = 'http://localhost/learning/christmas-markets/';
     </script>
 </head>
@@ -29,7 +30,7 @@
 
                 </div>
             </div>
-            <div class="content-box box-shadow">
+            <div class="content-box box-shadow scroll-y">
                 <div id="landing-box">
                     <div class="block-body">
                         <h3>Christmas Markets in Europe</h3>
@@ -46,7 +47,7 @@
                     <div id="back-button" class="mb-3">
                         <button class="btn btn-round" onclick="ioBackShowMoreLocations()">« Back to more locations</button>
                     </div>
-                    <div id="marker-detail">
+                    <div id="marker-detail" class="scroll-y">
 
                     </div>
                 </div>

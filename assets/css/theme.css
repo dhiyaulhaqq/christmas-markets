@@ -6055,8 +6055,8 @@ body {
 }
 .page-section.section-map .content-box {
   background-color: white;
-  height: 320px;
-  overflow-y: scroll;
+  height: 350px;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 .page-section.section-map .note {
@@ -6066,9 +6066,51 @@ body {
 .page-section.section-map #landing-box .block-body h3 {
   margin-bottom: 1rem;
 }
-.page-section.section-map #result-box,
 .page-section.section-map #marker-detail {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 265px;
+}
+.page-section.section-map #marker-detail .block-thumb {
+  height: 220px;
+  margin-bottom: 16px;
+}
+.page-section.section-map #marker-detail .block-thumb img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.page-section.section-map #marker-detail .marker-item {
+  display: flex;
+}
+.page-section.section-map #marker-detail .marker-item .block-thumb {
+  width: 100px;
+  height: 100px;
+  margin-right: 16px;
+}
+.page-section.section-map #marker-detail .marker-item .block-body {
+  flex-basis: min-content;
+  flex-grow: 1;
+}
+.page-section.section-map .scroll-y::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.page-section.section-map .scroll-y::-webkit-scrollbar-thumb {
+  background: #dedede;
+  border: 0px none #ffffff;
+  border-radius: 69px;
+}
+.page-section.section-map .scroll-y::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.page-section.section-map .scroll-y::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+  border-radius: 100px;
+}
+.page-section.section-map .scroll-y::-webkit-scrollbar-thumb:hover {
+  background: #1a105a;
 }
 .page-section.section-map iframe {
   position: absolute;
@@ -6077,7 +6119,6 @@ body {
 }
 .page-section .block-hor {
   display: flex;
-  flex-wrap: wrap;
 }
 .page-section .block-hor .block-thumb {
   margin-right: 8px;
