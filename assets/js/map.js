@@ -161,14 +161,16 @@ function ioAddMarkers(markerData) {
 const landingBox = document.getElementById('landing-box');
 const resultBox = document.getElementById('result-box');
 const markerDetail = document.getElementById('marker-detail');
+const backButton = document.getElementById('back-button');
 
 function ioShowMarkerDetail(id) {
    landingBox.classList.add("d-none");
    resultBox.classList.remove("d-none");
+   backButton.classList.remove("d-none");
 
    var data = iovars.xarkers.find(item => item.id == id);
 
-   content = `
+   let content = `
       <h5>${data.name}</h5>
       <p>${data.address}</p>
       <p>${data.description}</p>
@@ -185,4 +187,20 @@ function ioResetMap() {
 
    landingBox.classList.remove("d-none");
    resultBox.classList.add("d-none");
+}
+
+function ioBackShowMoreLocations() {
+   backButton.classList.add("d-none");
+
+   let content = "";
+   var listMarker = iovars.xarkers;
+
+   listMarker.forEach((data) => {
+      content += `
+      <h5>${data.name}</h5>
+      <p>${data.address}</p>
+   `;
+   })
+
+   markerDetail.innerHTML = content;
 }

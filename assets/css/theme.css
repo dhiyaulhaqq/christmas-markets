@@ -6047,9 +6047,11 @@ body {
 .page-section.section-map .control-box .fa-solid {
   font-size: 120%;
 }
-.page-section.section-map .control-box .btn {
-  padding-left: 16px;
-  padding-right: 16px;
+.page-section.section-map .btn-round {
+  background-color: white;
+  border-color: #436ced;
+  border-radius: 50rem;
+  padding: 6px 16px;
 }
 .page-section.section-map .content-box {
   background-color: white;

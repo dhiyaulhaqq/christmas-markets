@@ -65,10 +65,13 @@ body {
             .fa-solid {
                 font-size: 120%;
             }
-            .btn {
-                padding-left: 16px;
-                padding-right: 16px;
-            }
+        }
+
+        .btn-round {
+            background-color: white;
+            border-color: #436ced;
+            border-radius: 50rem;
+            padding: 6px 16px;
         }
 
         .content-box {

@@ -20,12 +20,12 @@
                         <input type="text" class="flex-fill border-white" placeholder="Click the target or type a location">
                         <button class="btn"><i class="fa-solid fa-location-crosshairs"></i></button>
                     </div>
-                    <button class="btn bg-white border-primary rounded-pill mb-3"><i class="fa-solid fa-location-dot mr-2"></i>Saved (0)</button>
+                    <button class="btn btn-round mb-3"><i class="fa-solid fa-location-dot mr-2"></i>Saved (0)</button>
                 </div>
                 <div class="filter block-hor">
-                    <button class="btn bg-white border-primary rounded-pill item">Open Now</button>
-                    <button class="btn bg-white border-primary rounded-pill item">Filter Date</button>
-                    <button class="btn bg-white border-primary rounded-pill item" onclick="ioResetMap()">Reset Map</button>
+                    <button class="btn btn-round item">Open Now</button>
+                    <button class="btn btn-round item">Filter Date</button>
+                    <button class="btn btn-round item" onclick="ioResetMap()">Reset Map</button>
 
                 </div>
             </div>
@@ -43,6 +43,9 @@
                     </div>
                 </div>
                 <div id="result-box" class="d-none">
+                    <div id="back-button" class="mb-3">
+                        <button class="btn btn-round" onclick="ioBackShowMoreLocations()">« Back to more locations</button>
+                    </div>
                     <div id="marker-detail">
 
                     </div>
