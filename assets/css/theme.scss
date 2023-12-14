@@ -95,6 +95,11 @@ body {
         }
 
         #marker-detail {
+            .heading {
+                h4 {
+                    font-size: 20px;
+                }
+            }
             .marker-detail {
                 & {
                     overflow-y: auto;
@@ -110,9 +115,11 @@ body {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
+                        border-radius: 8px;
                     }
                 }
             }
+
             .marker-list {
                 & {
                     overflow-y: auto;
@@ -126,13 +133,23 @@ body {
                         border-bottom: 1px solid #dedede;
                     }
                     .block-thumb {
-                        width: 100px;
-                        height: 100px;
-                        margin-right: 16px;
+                        & {
+                            width: 100px;
+                            height: 100px;
+                            margin-right: 24px;
+                        }
+                        img {
+                            border-radius: 4px;
+                        }
                     }
                     .block-body {
-                        flex-basis: min-content;
-                        flex-grow: 1;
+                        & {
+                            flex-basis: min-content;
+                            flex-grow: 1;
+                        }
+                        .distance {
+                            font-size: 90%;
+                        }
                     }
                 }
             }

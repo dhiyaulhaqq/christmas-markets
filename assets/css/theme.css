@@ -6066,6 +6066,9 @@ body {
 .page-section.section-map #landing-box .block-body h3 {
   margin-bottom: 1rem;
 }
+.page-section.section-map #marker-detail .heading h4 {
+  font-size: 20px;
+}
 .page-section.section-map #marker-detail .marker-detail {
   overflow-y: auto;
   overflow-x: hidden;
@@ -6079,6 +6082,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 .page-section.section-map #marker-detail .marker-list {
   overflow-y: auto;
@@ -6093,11 +6097,17 @@ body {
 .page-section.section-map #marker-detail .marker-list .marker-item .block-thumb {
   width: 100px;
   height: 100px;
-  margin-right: 16px;
+  margin-right: 24px;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .block-thumb img {
+  border-radius: 4px;
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .block-body {
   flex-basis: min-content;
   flex-grow: 1;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .block-body .distance {
+  font-size: 90%;
 }
 .page-section.section-map .scroll-y::-webkit-scrollbar {
   width: 10px;

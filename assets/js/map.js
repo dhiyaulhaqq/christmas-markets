@@ -2,6 +2,7 @@ var map;
 var iovars = {
    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
    map: {},
+   sort_xarkers: [],
    xarkers: [],
    marker_icons: {},
    init_xarkers: [],
@@ -114,6 +115,9 @@ function ioSetInitialMarkers() {
          // Finally, add the locations to the map
          ioAddMarkers(locations);
 
+         // add distance field
+         ioAddDistance();
+
          setTimeout(function () {
             processURL();
          }, 100);
@@ -156,6 +160,31 @@ function ioAddMarkers(markerData) {
    });
 
    // ioShowMarkersList(markerData);
+}
+
+function ioAddDistance() {
+   let center = iovars.init_loc;
+   let locations = iovars.xarkers;
+
+   // Convert the center to a Google Maps LatLng object
+   let centerLatLng = new google.maps.LatLng(center.lat, center.lng);
+
+   // Calculate distance and append it to each location object
+   locations.forEach(location => {
+      let locationLatLng = new google.maps.LatLng(location.gps.lat, location.gps.lng);
+      location.distance = google.maps.geometry.spherical.computeDistanceBetween(centerLatLng, locationLatLng);
+
+      if (isNaN(location.distance)) {
+         console.log(center, location.gps)
+      }
+   });
+
+   // Sort the locations based on the calculated distance
+   locations.sort((a, b) => {
+      return a.distance - b.distance;
+   });
+
+   iovars.sort_xarkers = [...locations];
 }
 
 const landingBox = document.getElementById('landing-box');
@@ -206,7 +235,9 @@ function ioBackShowMoreLocations() {
    let content = "";
    let detail_image = "";
    let imageUrl = "";
-   let listMarker = iovars.xarkers;
+   let distance = "";
+
+   let listMarker = iovars.sort_xarkers;
 
    listMarker.forEach((data) => {
       if (typeof data.imageIdList !== 'undefined' && typeof data.imageIdList[0] !== 'undefined') {
@@ -216,26 +247,41 @@ function ioBackShowMoreLocations() {
       if (imageUrl) {
          detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${data.name} Image"></div>`;
       }
+      if (typeof data.distance !== 'undefined') {
+         distance = `<p class="distance">Distance: ${ioFormatDistance(data.distance)}</p>`;
+      }
+
       content += `
          <div class="marker-item">
             ${detail_image}
             <div class="block-body">
                <h5>${data.name}</h5>
-               <p>${data.address}</p>
-               <button class="btn btn-round" onclick="ioShowMarkerDetail(${data.id})">View Detail</button>
+               <div>${data.address}</div>
+               ${distance}
+               <button class="btn btn-round" onclick="ioShowMarkerDetail(${data.id})">
+                  <i class="fa-solid fa-magnifying-glass-location mr-2"></i></i>View Detail
+               </button>
             </div>
          </div>
          `;
    })
 
    content = `
-   <div class="heading">
-      <h4>Christmas Markets near London, UK</h4>
-   </div>
-   <div class="marker-list scroll-y">
-      ${content}
-   </div>
+      <div class="heading">
+         <h4>Christmas Markets near London, UK</h4>
+      </div>
+      <div class="marker-list scroll-y">
+         ${content}
+      </div>
    `
 
    markerDetail.innerHTML = content;
+}
+
+function ioFormatDistance(distance) {
+   if (distance < 1000) {
+      return `${Math.round(distance)} m`;
+   } else {
+      return `${(distance / 1000).toFixed(2)} km`;
+   }
 }
