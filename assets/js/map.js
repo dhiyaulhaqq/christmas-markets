@@ -219,7 +219,12 @@ function ioShowMarkerDetail(id) {
       </div>
       `;
 
-   markerDetail.innerHTML = content;
+   markerDetail.innerHTML = content;// Display the back button
+
+   // Re-center and zoom in on the clicked marker's gps
+   map.setCenter(data.gps);
+   map.setZoom(14);  // You can adjust the zoom level as needed
+
 }
 
 // Reset map to initial state
@@ -255,11 +260,19 @@ function ioBackShowMoreLocations() {
          <div class="marker-item">
             ${detail_image}
             <div class="block-body">
-               <h5>${data.name}</h5>
+               <div class="head">
+                  <h5>${data.name}</h5>
+                  <div class="label">open</div>
+               </div>
                <div>${data.address}</div>
                ${distance}
                <button class="btn btn-round" onclick="ioShowMarkerDetail(${data.id})">
-                  <i class="fa-solid fa-magnifying-glass-location mr-2"></i></i>View Detail
+                  <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
+                  View Detail
+               </button>
+               <button class="btn btn-round">
+               <i class="fa-solid fa-heart mr-1"></i>
+                  Save Location
                </button>
             </div>
          </div>

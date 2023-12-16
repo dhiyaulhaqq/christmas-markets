@@ -6109,6 +6109,19 @@ body {
 .page-section.section-map #marker-detail .marker-list .marker-item .block-body .distance {
   font-size: 90%;
 }
+.page-section.section-map #marker-detail .marker-list .marker-item .head {
+  display: flex;
+  justify-content: space-between;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .label {
+  font-size: 90%;
+  background: #3a7e38;
+  color: #fff;
+  border-radius: 50rem;
+  padding: 0 10px;
+  line-height: 16px;
+  height: 20px;
+}
 .page-section.section-map .scroll-y::-webkit-scrollbar {
   width: 10px;
   height: 10px;
