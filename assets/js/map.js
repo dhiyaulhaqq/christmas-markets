@@ -228,6 +228,7 @@ function ioShowMarkerDetail(id) {
 }
 
 // Reset map to initial state
+// for reset button
 function ioResetMap() {
    map.setCenter(iovars.init_loc);
    map.setZoom(6);
@@ -236,15 +237,19 @@ function ioResetMap() {
    resultBox.classList.add("d-none");
 }
 
+// show more location button click function
 function ioBackShowMoreLocations() {
    let content = "";
    let detail_image = "";
    let imageUrl = "";
    let distance = "";
+   let isOpen = "";
 
    let listMarker = iovars.sort_xarkers;
 
    listMarker.forEach((data) => {
+      isOpen = isOpenNow(data);
+
       if (typeof data.imageIdList !== 'undefined' && typeof data.imageIdList[0] !== 'undefined') {
          imageUrl = io_sample_url + 'backend/assets/dynamic/' + data.imageIdList[0] + '-small.jpg';
       }
@@ -256,13 +261,21 @@ function ioBackShowMoreLocations() {
          distance = `<p class="distance">Distance: ${ioFormatDistance(data.distance)}</p>`;
       }
 
+      if (isOpen) {
+         isOpen = `
+            <div class="label ${isOpen}">${isOpen}</div>
+         `
+      }
+
+      // console.log(isOpen);
+
       content += `
          <div class="marker-item">
             ${detail_image}
             <div class="block-body">
                <div class="head">
                   <h5>${data.name}</h5>
-                  <div class="label">open</div>
+                  ${isOpen}
                </div>
                <div>${data.address}</div>
                ${distance}
@@ -298,3 +311,28 @@ function ioFormatDistance(distance) {
       return `${(distance / 1000).toFixed(2)} km`;
    }
 }
+
+function isOpenNow(data) {
+   // Disable time checking for now.
+   return isOpenToday(data);
+}
+
+
+function isOpenToday(location) {
+   // Check if location or location.openingDate is not defined or if open/close dates are not present
+   if (!location || !location.openingDate || !location.openingDate.open || !location.openingDate.close) {
+      return 'closed';
+   }
+   let today = Date.now();
+   let openingDate = new Date(location.openingDate.open);
+   let closingDate = new Date(location.openingDate.close);
+
+   console.log(today <= openingDate);
+
+   if (today >= openingDate && today <= closingDate) {
+      return "open";
+   } else {
+      return "closed";
+   }
+}
+

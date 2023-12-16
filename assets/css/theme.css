@@ -6115,12 +6115,16 @@ body {
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .label {
   font-size: 90%;
-  background: #3a7e38;
+  background: #999;
   color: #fff;
   border-radius: 50rem;
   padding: 0 10px;
   line-height: 16px;
   height: 20px;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .label.open {
+  background: #3a7e38;
+  color: #fff;
 }
 .page-section.section-map .scroll-y::-webkit-scrollbar {
   width: 10px;

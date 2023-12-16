@@ -156,13 +156,19 @@ body {
                         justify-content: space-between;
                     }
                     .label {
-                        font-size: 90%;
-                        background: #3a7e38;
-                        color: #fff;
-                        border-radius: 50rem;
-                        padding: 0 10px;
-                        line-height: 16px;
-                        height: 20px;
+                        & {
+                            font-size: 90%;
+                            background: #999;
+                            color: #fff;
+                            border-radius: 50rem;
+                            padding: 0 10px;
+                            line-height: 16px;
+                            height: 20px;
+                        }
+                        &.open {
+                            background: #3a7e38;
+                            color: #fff;
+                        }
                     }
                 }
             }
