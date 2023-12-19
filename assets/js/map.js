@@ -2,7 +2,6 @@ var map;
 var iovars = {
    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
    map: {},
-   sort_xarkers: [],
    xarkers: [],
    marker_icons: {},
    init_xarkers: [],
@@ -115,8 +114,8 @@ function ioSetInitialMarkers() {
          // Finally, add the locations to the map
          ioAddMarkers(locations);
 
-         // add distance field
-         ioAddDistance();
+         // sort by distance
+         ioSortDistance();
 
          setTimeout(function () {
             processURL();
@@ -129,9 +128,7 @@ function ioSetInitialMarkers() {
 
 // Add markers to the map
 function ioAddMarkers(markerData) {
-   // ioClearMarkers();
-
-   // iovars.xarkers = [...markerData];
+   let markers = [];
 
    markerData.forEach((data, index) => {
       var markerSettings = {
@@ -155,14 +152,14 @@ function ioAddMarkers(markerData) {
          ioShowMarkerDetail(data.id);
       });
 
-      // markers.push(marker);
-      iovars.xarkers.push(marker);
+      markers.push(marker);
    });
 
-   // ioShowMarkersList(markerData);
+   iovars.xarkers = [...markers];
+
 }
 
-function ioAddDistance() {
+function ioSortDistance() {
    let center = iovars.init_loc;
    let locations = iovars.xarkers;
 
@@ -184,7 +181,7 @@ function ioAddDistance() {
       return a.distance - b.distance;
    });
 
-   iovars.sort_xarkers = [...locations];
+   iovars.xarkers = [...locations];
 }
 
 const landingBox = document.getElementById('landing-box');
@@ -235,30 +232,44 @@ function ioResetMap() {
 
    landingBox.classList.remove("d-none");
    resultBox.classList.add("d-none");
+
+   ioAddMarkers(iovars.init_xarkers);
+   ioSortDistance();
 }
 
 // show more location button click function
 function ioBackShowMoreLocations() {
+   map.setCenter(iovars.init_loc);
+   map.setZoom(6);
+
+   let content = "";
+
+   let listMarker = iovars.xarkers;
+
+   content = ioShowLocationList(listMarker);
+
+   markerDetail.innerHTML = content;
+}
+
+function ioShowLocationList(listMarker) {
    let content = "";
    let detail_image = "";
    let imageUrl = "";
    let distance = "";
    let isOpen = "";
 
-   let listMarker = iovars.sort_xarkers;
+   listMarker.forEach((location) => {
+      isOpen = isOpenNow(location);
 
-   listMarker.forEach((data) => {
-      isOpen = isOpenNow(data);
-
-      if (typeof data.imageIdList !== 'undefined' && typeof data.imageIdList[0] !== 'undefined') {
-         imageUrl = io_sample_url + 'backend/assets/dynamic/' + data.imageIdList[0] + '-small.jpg';
+      if (typeof location.imageIdList !== 'undefined' && typeof location.imageIdList[0] !== 'undefined') {
+         imageUrl = io_sample_url + 'backend/assets/dynamic/' + location.imageIdList[0] + '-small.jpg';
       }
 
       if (imageUrl) {
-         detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${data.name} Image"></div>`;
+         detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${location.name} Image"></div>`;
       }
-      if (typeof data.distance !== 'undefined') {
-         distance = `<p class="distance">Distance: ${ioFormatDistance(data.distance)}</p>`;
+      if (typeof location.distance !== 'undefined') {
+         distance = `<p class="distance">Distance: ${ioFormatDistance(location.distance)}</p>`;
       }
 
       if (isOpen) {
@@ -267,19 +278,17 @@ function ioBackShowMoreLocations() {
          `
       }
 
-      // console.log(isOpen);
-
       content += `
          <div class="marker-item">
             ${detail_image}
             <div class="block-body">
                <div class="head">
-                  <h5>${data.name}</h5>
+                  <h5>${location.name}</h5>
                   ${isOpen}
                </div>
-               <div>${data.address}</div>
+               <div>${location.address}</div>
                ${distance}
-               <button class="btn btn-round" onclick="ioShowMarkerDetail(${data.id})">
+               <button class="btn btn-round" onclick="ioShowMarkerDetail(${location.id})">
                   <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
                   View Detail
                </button>
@@ -301,7 +310,7 @@ function ioBackShowMoreLocations() {
       </div>
    `
 
-   markerDetail.innerHTML = content;
+   return content;
 }
 
 function ioFormatDistance(distance) {
@@ -327,8 +336,6 @@ function isOpenToday(location) {
    let openingDate = new Date(location.openingDate.open);
    let closingDate = new Date(location.openingDate.close);
 
-   console.log(today <= openingDate);
-
    if (today >= openingDate && today <= closingDate) {
       return "open";
    } else {
@@ -336,3 +343,39 @@ function isOpenToday(location) {
    }
 }
 
+// open now button click function
+function ioFilterOpenNow() {
+   landingBox.classList.add("d-none");
+   resultBox.classList.remove("d-none");
+
+   let content = "";
+
+   let listMarker = ioMakeIsOpenNowList();
+
+   ioClearMarkers();
+   ioAddMarkers(listMarker);
+
+   content = ioShowLocationList(listMarker);
+
+   markerDetail.innerHTML = content;
+}
+
+function ioMakeIsOpenNowList() {
+   let filtered = [];
+   let listMarker = iovars.xarkers;
+
+   listMarker.forEach((location) => {
+      isOpen = isOpenNow(location);
+
+      if (isOpen == "open") {
+         filtered.push(location);
+      }
+   })
+
+   return filtered;
+}
+
+function ioClearMarkers() {
+   iovars.xarkers.forEach(marker => marker.setMap(null));
+   iovars.xarkers = [];
+}

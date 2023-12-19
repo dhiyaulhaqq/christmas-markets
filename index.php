@@ -24,7 +24,7 @@
                     <button class="btn btn-round mb-3"><i class="fa-solid fa-location-dot mr-2"></i>Saved (0)</button>
                 </div>
                 <div class="filter block-hor">
-                    <button class="btn btn-round item">Open Now</button>
+                    <button class="btn btn-round item" onclick="ioFilterOpenNow()">Open Now</button>
                     <button class="btn btn-round item">Filter Date</button>
                     <button class="btn btn-round item" onclick="ioResetMap()">Reset Map</button>
 
