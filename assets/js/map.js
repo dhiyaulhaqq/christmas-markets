@@ -41,6 +41,7 @@ async function ioInitMap() {
    };
 
    ioSetInitialMarkers();
+   ioSetupAutoComplete();
 }
 
 var sampleOpeningHours = [
@@ -159,8 +160,11 @@ function ioAddMarkers(markerData) {
 
 }
 
-function ioSortDistance() {
-   let center = iovars.init_loc;
+function ioSortDistance(center) {
+   if (!center) {
+      center = iovars.init_loc;
+   }
+
    let locations = iovars.xarkers;
 
    // Convert the center to a Google Maps LatLng object
@@ -187,6 +191,7 @@ function ioSortDistance() {
 const landingBox = document.getElementById('landing-box');
 const resultBox = document.getElementById('result-box');
 const markerDetail = document.getElementById('marker-detail');
+const input = document.getElementById('search-input');
 
 function ioShowMarkerDetail(id) {
    landingBox.classList.add("d-none");
@@ -221,7 +226,7 @@ function ioShowMarkerDetail(id) {
 
    let content = `
       <div id="back-button" class="mb-3">
-         <button class="btn btn-round" onclick="ioBackShowMoreLocations()">« Back to more locations</button>
+         <button class="btn btn-round" onclick="ioShowMoreLocations()">« Back to more locations</button>
       </div>
       <div class="marker-detail scroll-y">
          ${detail_image}
@@ -268,13 +273,27 @@ function ioResetMap() {
    landingBox.classList.remove("d-none");
    resultBox.classList.add("d-none");
 
+   ioClearMarkers();
+   ioClearSearch();
    ioAddMarkers(iovars.init_xarkers);
    ioSortDistance();
 }
 
 // show more location button click function
-function ioBackShowMoreLocations() {
-   map.setCenter(iovars.init_loc);
+function ioShowMoreLocations(center) {
+   landingBox.classList.add("d-none");
+   resultBox.classList.remove("d-none");
+
+   if (!center) {
+      center = iovars.init_loc;
+   }
+
+   if (typeof iovars.search_loc.geometry != "undefined") {
+      const loc = iovars.search_loc.geometry.location;
+      center = { lat: loc.lat(), lng: loc.lng() };
+   }
+
+   map.setCenter(center);
    map.setZoom(6);
 
    let content = "";
@@ -293,6 +312,7 @@ function ioShowLocationList(listMarker) {
    let distance = "";
    let isOpen = "";
    let openingDate = "";
+   let placeName = "";
 
    listMarker.forEach((location) => {
       if (typeof location.imageIdList !== 'undefined' && typeof location.imageIdList[0] !== 'undefined') {
@@ -348,9 +368,15 @@ function ioShowLocationList(listMarker) {
          `;
    })
 
+   placeName = iovars.init_loc_name;
+
+   if (typeof iovars.search_loc.formatted_address != 'undefined') {
+      placeName = iovars.search_loc.formatted_address;
+   }
+
    content = `
       <div class="heading">
-         <h4>Christmas Markets near London, UK</h4>
+         <h4>Christmas Markets near ${placeName}</h4>
       </div>
       <div class="marker-list scroll-y">
          ${content}
@@ -395,16 +421,13 @@ function ioFilterOpenNow() {
    landingBox.classList.add("d-none");
    resultBox.classList.remove("d-none");
 
-   let content = "";
-
    let listMarker = ioMakeIsOpenNowList();
 
    ioClearMarkers();
    ioAddMarkers(listMarker);
 
-   content = ioShowLocationList(listMarker);
+   ioShowMoreLocations();
 
-   markerDetail.innerHTML = content;
 }
 
 function ioMakeIsOpenNowList() {
@@ -427,6 +450,11 @@ function ioClearMarkers() {
    iovars.xarkers = [];
 }
 
+function ioClearSearch() {
+   iovars.search_loc = {};
+   input.value = "";
+}
+
 function getOpeningDate(location) {
    const options = {
       weekday: 'short',
@@ -442,4 +470,30 @@ function getOpeningDate(location) {
    let closingDate = new Date(location.openingDate.close);
 
    return openingDate.toLocaleDateString("en-US", options) + " - " + closingDate.toLocaleDateString("en-US", options);
+}
+
+function ioSetupAutoComplete() {
+   // Setup autocomplete
+   const autocomplete = new google.maps.places.Autocomplete(input);
+
+   autocomplete.bindTo('bounds', map);
+
+   // Listen for the event fired when the user selects a prediction and retrieve more details for that place.
+   autocomplete.addListener('place_changed', function () {
+      const place = autocomplete.getPlace();
+      const loc = place.geometry.location;
+
+      iovars.search_loc = place;
+
+      if (!place.geometry) {
+         console.log("No details available for this location.");
+         return;
+      }
+
+      const center = { lat: loc.lat(), lng: loc.lng() };
+
+      ioSortDistance(center);
+      ioShowMoreLocations(center);
+
+   });
 }
