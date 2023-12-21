@@ -6062,12 +6062,13 @@ body {
 .page-section.section-map .note {
   font-size: 90%;
   font-style: italic;
+  color: #666;
 }
 .page-section.section-map #landing-box .block-body h3 {
   margin-bottom: 1rem;
 }
 .page-section.section-map #marker-detail .heading h4 {
-  font-size: 20px;
+  font-size: 18px;
 }
 .page-section.section-map #marker-detail .marker-detail {
   overflow-y: auto;
@@ -6083,6 +6084,30 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+}
+.page-section.section-map #marker-detail .marker-detail .block-body .head {
+  display: flex;
+  justify-content: space-between;
+}
+.page-section.section-map #marker-detail .marker-detail .block-body .head h5 {
+  font-size: 18px;
+  font-weight: 700;
+}
+.page-section.section-map #marker-detail .marker-detail .block-body .label {
+  font-size: 90%;
+  background: #999;
+  color: #fff;
+  border-radius: 50rem;
+  padding: 0 10px;
+  line-height: 16px;
+  height: 20px;
+}
+.page-section.section-map #marker-detail .marker-detail .block-body .label.open {
+  background: #3a7e38;
+  color: #fff;
+}
+.page-section.section-map #marker-detail .marker-detail .block-body .opening {
+  font-size: 90%;
 }
 .page-section.section-map #marker-detail .marker-list {
   overflow-y: auto;
@@ -6100,7 +6125,7 @@ body {
   margin-right: 24px;
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .block-thumb img {
-  border-radius: 4px;
+  border-radius: 8px;
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .block-body {
   flex-basis: min-content;
@@ -6108,10 +6133,19 @@ body {
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .block-body .distance {
   font-size: 90%;
+  margin-bottom: 4px;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .block-body .opening {
+  font-size: 90%;
+  margin-bottom: 4px;
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .head {
   display: flex;
   justify-content: space-between;
+}
+.page-section.section-map #marker-detail .marker-list .marker-item .head h5 {
+  font-size: 16px;
+  font-weight: 700;
 }
 .page-section.section-map #marker-detail .marker-list .marker-item .label {
   font-size: 90%;

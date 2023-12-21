@@ -203,16 +203,51 @@ function ioShowMarkerDetail(id) {
       detail_image = `<div class="block-thumb"><img src="${detail_image}" alt="${data.name} Image"></div>`;
    }
 
+   let isOpen = isOpenNow(data);
+
+   if (isOpen) {
+      isOpen = `
+         <div class="label ${isOpen}">${isOpen}</div>
+      `
+   }
+
+   let openingDate = getOpeningDate(data);
+
+   if (openingDate) {
+      openingDate = `
+            <p class="opening"><strong>Opening Date: </strong>${openingDate}</p>
+         `
+   }
+
    let content = `
       <div id="back-button" class="mb-3">
          <button class="btn btn-round" onclick="ioBackShowMoreLocations()">« Back to more locations</button>
       </div>
       <div class="marker-detail scroll-y">
          ${detail_image}
-         <h5>${data.name}</h5>
-         <p>${data.address}</p>
-         <p>${data.description}</p>
-         <p class="note">Please note that this page should only be used as a guidance as Christmas market opening times may be subject to change during the festive season. We advise that you check the individual market's official website or contact the organisers directly for the most up-to-date timings.</p>
+         <div class="block-body">
+            <div class="head">
+               <h5>${data.name}</h5>
+               ${isOpen}
+            </div>
+            <p>${data.address}</p>
+            ${openingDate}
+            <p>${data.description}</p>
+         </div>
+         <div class="my-3">
+            <button class="btn btn-round">
+            <i class="fa-solid fa-heart mr-1"></i>
+               Save Location
+            </button>
+            <a class="btn btn-round" href="https://www.google.com/maps/search/?api=1&query=${data.gps.lat},${data.gps.lng}" target="_blank" >
+               <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
+               View on Google Maps
+            </a>
+         </div>
+         <div class="note">
+            <p>Please note that this page should only be used as a guidance as Christmas market opening times may be subject to change during the festive season. We advise that you check the individual market's official website or contact the organisers directly for the most up-to-date timings.</p>
+            <p>Visit <a href="http://www.website.com" target="_blank"></a> for opening hours</p>
+         </div>
       </div>
       `;
 
@@ -257,10 +292,9 @@ function ioShowLocationList(listMarker) {
    let imageUrl = "";
    let distance = "";
    let isOpen = "";
+   let openingDate = "";
 
    listMarker.forEach((location) => {
-      isOpen = isOpenNow(location);
-
       if (typeof location.imageIdList !== 'undefined' && typeof location.imageIdList[0] !== 'undefined') {
          imageUrl = io_sample_url + 'backend/assets/dynamic/' + location.imageIdList[0] + '-small.jpg';
       }
@@ -269,12 +303,22 @@ function ioShowLocationList(listMarker) {
          detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${location.name} Image"></div>`;
       }
       if (typeof location.distance !== 'undefined') {
-         distance = `<p class="distance">Distance: ${ioFormatDistance(location.distance)}</p>`;
+         distance = `<div class="distance">Distance: ${ioFormatDistance(location.distance)}</div>`;
       }
+
+      isOpen = isOpenNow(location);
 
       if (isOpen) {
          isOpen = `
             <div class="label ${isOpen}">${isOpen}</div>
+         `
+      }
+
+      openingDate = getOpeningDate(location);
+
+      if (openingDate) {
+         openingDate = `
+            <div class="opening"><strong>Opening Date: </strong>${openingDate}</div>
          `
       }
 
@@ -288,14 +332,17 @@ function ioShowLocationList(listMarker) {
                </div>
                <div>${location.address}</div>
                ${distance}
-               <button class="btn btn-round" onclick="ioShowMarkerDetail(${location.id})">
-                  <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
-                  View Detail
-               </button>
-               <button class="btn btn-round">
-               <i class="fa-solid fa-heart mr-1"></i>
-                  Save Location
-               </button>
+               ${openingDate}
+               <div class="mt-3">
+                  <button class="btn btn-round" onclick="ioShowMarkerDetail(${location.id})">
+                     <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
+                     View Detail
+                  </button>
+                  <button class="btn btn-round">
+                  <i class="fa-solid fa-heart mr-1"></i>
+                     Save Location
+                  </button>
+               </div>
             </div>
          </div>
          `;
@@ -378,4 +425,21 @@ function ioMakeIsOpenNowList() {
 function ioClearMarkers() {
    iovars.xarkers.forEach(marker => marker.setMap(null));
    iovars.xarkers = [];
+}
+
+function getOpeningDate(location) {
+   const options = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+   };
+   // Check if location or location.openingDate is not defined or if open/close dates are not present
+   if (!location || !location.openingDate || !location.openingDate.open || !location.openingDate.close) {
+      return '';
+   }
+   let openingDate = new Date(location.openingDate.open);
+   let closingDate = new Date(location.openingDate.close);
+
+   return openingDate.toLocaleDateString("en-US", options) + " - " + closingDate.toLocaleDateString("en-US", options);
 }
