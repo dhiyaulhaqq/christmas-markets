@@ -19,7 +19,7 @@
                 <div class="search d-flex flex-wrap justify-content-center">
                     <div class="border border-primary rounded-lg d-flex flex-fill bg-white px-1 mr-2 mb-3">
                         <input type="text" id="search-input" class="flex-fill border-white" placeholder="Click the target or type a location">
-                        <button class="btn"><i class="fa-solid fa-location-crosshairs"></i></button>
+                        <button class="btn" onclick="ioGetCurrentLocation()"><i class="fa-solid fa-location-crosshairs"></i></button>
                     </div>
                     <button class="btn btn-round mb-3" onclick="ioShowSavedLocations()"><i class="fa-solid fa-location-dot mr-2"></i>Saved (<span id="saved">0</span>)</button>
                 </div>

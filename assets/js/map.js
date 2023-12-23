@@ -514,6 +514,52 @@ function ioSetupAutoComplete() {
    });
 }
 
+function ioGetCurrentLocation() {
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+         var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+         };
+
+         map.setCenter(pos);
+         map.setZoom(14);
+
+         ioGetGeoLocation(pos.lat, pos.lng);
+
+      }, function () {
+         alert('Error: The Geolocation service failed.');
+      });
+   } else {
+      alert('Error: Your browser doesn\'t support geolocation.');
+   }
+}
+
+function ioGetGeoLocation(lat, lng) {
+   const geocoder = new google.maps.Geocoder();
+   const latlng = new google.maps.LatLng(lat, lng);
+
+   geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         if (results[0]) {
+            iovars.search_loc = results[0];
+
+            let locations = ioSortDistance();
+            iovars.xarkers = [...locations];
+
+            ioShowMoreLocations();
+            map.setZoom(14);
+
+            let placeName = iovars.search_loc.formatted_address;
+            input.value = placeName;
+
+         }
+      } else {
+         console.log("Geocoder failed due to: " + status);
+      }
+   });
+}
+
 function ioSaveLocation(id) {
    let savedMarkers = [];
 
