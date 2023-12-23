@@ -42,6 +42,7 @@ async function ioInitMap() {
 
    ioSetInitialMarkers();
    ioSetupAutoComplete();
+   ioShowSavedNumbers();
 }
 
 var sampleOpeningHours = [
@@ -116,7 +117,9 @@ function ioSetInitialMarkers() {
          ioAddMarkers(locations);
 
          // sort by distance
-         ioSortDistance();
+         locations = ioSortDistance();
+
+         iovars.xarkers = [...locations];
 
          setTimeout(function () {
             processURL();
@@ -160,12 +163,18 @@ function ioAddMarkers(markerData) {
 
 }
 
-function ioSortDistance(center) {
-   if (!center) {
-      center = iovars.init_loc;
+function ioSortDistance(locations) {
+
+   if (!locations) {
+      locations = iovars.xarkers;
    }
 
-   let locations = iovars.xarkers;
+   let center = iovars.init_loc;
+
+   if (typeof iovars.search_loc.geometry != "undefined") {
+      const loc = iovars.search_loc.geometry.location;
+      center = { lat: loc.lat(), lng: loc.lng() };
+   }
 
    // Convert the center to a Google Maps LatLng object
    let centerLatLng = new google.maps.LatLng(center.lat, center.lng);
@@ -185,13 +194,16 @@ function ioSortDistance(center) {
       return a.distance - b.distance;
    });
 
-   iovars.xarkers = [...locations];
+   // iovars.xarkers = [...locations];
+
+   return locations;
 }
 
 const landingBox = document.getElementById('landing-box');
 const resultBox = document.getElementById('result-box');
 const markerDetail = document.getElementById('marker-detail');
 const input = document.getElementById('search-input');
+const savedText = document.getElementById('saved');
 
 function ioShowMarkerDetail(id) {
    landingBox.classList.add("d-none");
@@ -270,23 +282,25 @@ function ioResetMap() {
    map.setCenter(iovars.init_loc);
    map.setZoom(6);
 
-   landingBox.classList.remove("d-none");
-   resultBox.classList.add("d-none");
-
    ioClearMarkers();
    ioClearSearch();
    ioAddMarkers(iovars.init_xarkers);
-   ioSortDistance();
+
+   let locations = ioSortDistance();
+   iovars.xarkers = [...locations];
+
+   ioClearSavedLocations();
+
+   landingBox.classList.remove("d-none");
+   resultBox.classList.add("d-none");
 }
 
 // show more location button click function
-function ioShowMoreLocations(center) {
+function ioShowMoreLocations() {
    landingBox.classList.add("d-none");
    resultBox.classList.remove("d-none");
 
-   if (!center) {
-      center = iovars.init_loc;
-   }
+   let center = iovars.init_loc;
 
    if (typeof iovars.search_loc.geometry != "undefined") {
       const loc = iovars.search_loc.geometry.location;
@@ -347,7 +361,7 @@ function ioShowLocationList(listMarker) {
             ${detail_image}
             <div class="block-body">
                <div class="head">
-                  <h5>${location.name}</h5>
+                  <h5 class="mr-2">${location.name}</h5>
                   ${isOpen}
                </div>
                <div>${location.address}</div>
@@ -358,7 +372,7 @@ function ioShowLocationList(listMarker) {
                      <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
                      View Detail
                   </button>
-                  <button class="btn btn-round">
+                  <button class="btn btn-round" onclick="ioSaveLocation(${location.id})">
                   <i class="fa-solid fa-heart mr-1"></i>
                      Save Location
                   </button>
@@ -490,10 +504,167 @@ function ioSetupAutoComplete() {
          return;
       }
 
-      const center = { lat: loc.lat(), lng: loc.lng() };
+      // const center = { lat: loc.lat(), lng: loc.lng() };
 
-      ioSortDistance(center);
-      ioShowMoreLocations(center);
+      let locations = ioSortDistance();
+      iovars.xarkers = [...locations];
+
+      ioShowMoreLocations();
 
    });
+}
+
+function ioSaveLocation(id) {
+   let savedMarkers = [];
+
+   try {
+      savedMarkers = JSON.parse(localStorage.getItem('savedMarkers')) || [];
+   } catch (error) {
+      console.error(error);
+   }
+
+   var markerData = iovars.init_xarkers.find(item => item.id == id);
+
+   // Check if marker is already saved (based on its title, for simplicity)
+   const isAlreadySaved = savedMarkers.some(savedMarker => savedMarker.id === markerData.id);
+
+   if (!isAlreadySaved) {
+      savedMarkers.push(markerData);
+      localStorage.setItem('savedMarkers', JSON.stringify(savedMarkers));
+      console.log('Marker saved to localStorage.');
+   } else {
+      console.log('Marker is already saved.');
+   }
+
+   ioShowSavedNumbers();
+}
+
+function ioShowSavedNumbers() {
+   const savedData = localStorage.getItem('savedMarkers');
+   let total = 0;
+
+   if (savedData) {
+      const markerData = JSON.parse(savedData);
+
+      total = markerData.length;
+   }
+
+   savedText.innerHTML = total;
+}
+
+function ioClearSavedLocations() {
+   localStorage.setItem('savedMarkers', []);
+
+   ioShowSavedNumbers();
+   ioShowSavedLocations();
+}
+
+function ioShowSavedLocations() {
+   landingBox.classList.add("d-none");
+   resultBox.classList.remove("d-none");
+
+   let center = iovars.init_loc;
+
+   if (typeof iovars.search_loc.geometry != "undefined") {
+      const loc = iovars.search_loc.geometry.location;
+      center = { lat: loc.lat(), lng: loc.lng() };
+   }
+
+   map.setCenter(center);
+   map.setZoom(6);
+
+   const savedData = localStorage.getItem('savedMarkers');
+   let markerData = "";
+
+   if (savedData) {
+      markerData = JSON.parse(savedData);
+   }
+
+   let content = ioShowSavedLocationList(markerData);
+
+   markerDetail.innerHTML = content;
+}
+
+function ioShowSavedLocationList(listMarker) {
+   let content = "";
+   let detail_image = "";
+   let imageUrl = "";
+   let distance = "";
+   let isOpen = "";
+   let openingDate = "";
+
+   if (listMarker) {
+
+      listMarker = ioSortDistance(listMarker);
+
+      listMarker.forEach((location) => {
+         if (typeof location.imageIdList !== 'undefined' && typeof location.imageIdList[0] !== 'undefined') {
+            imageUrl = io_sample_url + 'backend/assets/dynamic/' + location.imageIdList[0] + '-small.jpg';
+         }
+
+         if (imageUrl) {
+            detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${location.name} Image"></div>`;
+         }
+         if (typeof location.distance !== 'undefined') {
+            distance = `<div class="distance">Distance: ${ioFormatDistance(location.distance)}</div>`;
+         }
+
+         isOpen = isOpenNow(location);
+
+         if (isOpen) {
+            isOpen = `
+            <div class="label ${isOpen}">${isOpen}</div>
+         `
+         }
+
+         openingDate = getOpeningDate(location);
+
+         if (openingDate) {
+            openingDate = `
+            <div class="opening"><strong>Opening Date: </strong>${openingDate}</div>
+         `
+         }
+
+         content += `
+         <div class="marker-item">
+            ${detail_image}
+            <div class="block-body">
+               <div class="head">
+                  <h5 class="mr-2">${location.name}</h5>
+                  ${isOpen}
+               </div>
+               <div>${location.address}</div>
+               ${distance}
+               ${openingDate}
+               <div class="mt-3">
+                  <button class="btn btn-round" onclick="ioShowMarkerDetail(${location.id})">
+                     <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
+                     View Detail
+                  </button>
+               </div>
+            </div>
+         </div>
+         `;
+      })
+   } else {
+      content = `
+         <div class="no-data">
+            <p>No locations in your shortlist. Open a location on the map and click "Save location"</p>
+         </div>
+      `
+   }
+
+   content = `
+      <div class="heading">
+         <h4>Saved Location</h4>
+         <button class="btn btn-round btn-small" onclick="ioClearSavedLocations()">
+            Clear saved locations
+         </button>
+      </div>
+      <div class="marker-list scroll-y">
+         ${content}
+      </div>
+   `
+
+   return content;
 }

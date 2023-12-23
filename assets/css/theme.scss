@@ -54,6 +54,7 @@ body {
          top: 0;
          margin: 20px;
          max-width: 650px;
+         width: 100%;
       }
       .control-box {
          & {
@@ -73,6 +74,10 @@ body {
          border-color: #436ced;
          border-radius: 50rem;
          padding: 6px 16px;
+      }
+
+      .btn-small {
+         font-size: 90%;
       }
 
       .content-box {
@@ -98,6 +103,11 @@ body {
 
       #marker-detail {
          .heading {
+            & {
+               display: flex;
+               justify-content: space-between;
+               margin-bottom: 2px;
+            }
             h4 {
                font-size: 18px;
             }
@@ -213,6 +223,9 @@ body {
                      color: #fff;
                   }
                }
+            }
+            .no-data {
+               padding: 16px 0;
             }
          }
       }

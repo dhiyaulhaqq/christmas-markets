@@ -21,7 +21,7 @@
                         <input type="text" id="search-input" class="flex-fill border-white" placeholder="Click the target or type a location">
                         <button class="btn"><i class="fa-solid fa-location-crosshairs"></i></button>
                     </div>
-                    <button class="btn btn-round mb-3"><i class="fa-solid fa-location-dot mr-2"></i>Saved (0)</button>
+                    <button class="btn btn-round mb-3" onclick="ioShowSavedLocations()"><i class="fa-solid fa-location-dot mr-2"></i>Saved (<span id="saved">0</span>)</button>
                 </div>
                 <div class="filter block-hor">
                     <button class="btn btn-round item" onclick="ioFilterOpenNow()">Open Now</button>
