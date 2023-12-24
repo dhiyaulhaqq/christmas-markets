@@ -6216,5 +6216,30 @@ body {
   margin-bottom: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
 }
+.page-section .modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+.page-section .modal-content {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  position: relative;
+  width: 500px;
+}
+.page-section .modal-content .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  line-height: 1;
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=theme.css.map */

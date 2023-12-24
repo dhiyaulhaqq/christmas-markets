@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="assets/css/fontawesome-all.css">
     <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://polyfill.io/v3/polyfill.js?features=default"></script>
     <script>
         var io_sample_url = 'https://reptile2.developmentpath.co.uk/tui/christmas-markets/';
@@ -25,7 +26,7 @@
                 </div>
                 <div class="filter block-hor">
                     <button class="btn btn-round item" onclick="ioFilterOpenNow()">Open Now</button>
-                    <button class="btn btn-round item">Filter Date</button>
+                    <button class="btn btn-round item" onclick="ioOpenModal()">Filter Date</button>
                     <button class="btn btn-round item" onclick="ioResetMap()">Reset Map</button>
 
                 </div>
@@ -50,9 +51,22 @@
                 </div>
             </div>
         </div>
+        <div id="pick-date-modal" class="modal d-none">
+            <div class="modal-content">
+                <span class="close-btn" onclick="ioCloseModal()"><i class="fa-solid fa-xmark"></i></span>
+                <form>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="text" id="pick-date" class="form-control" placeholder="Select Date..">
+                    </div>
+                    <button type="button" id="filter-btn" class="btn btn-round">Apply Filter</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="assets/js/map.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&callback=ioInitMap&key=AIzaSyAo6oq92figYRhKvO7jz4GKPIvJVncWkZY"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="assets/js/modal.js"></script>
 </body>

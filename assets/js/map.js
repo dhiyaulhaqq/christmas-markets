@@ -714,3 +714,32 @@ function ioShowSavedLocationList(listMarker) {
 
    return content;
 }
+
+function ioFilterByDate(date) {
+   // Hide landing box and show result box
+   landingBox.classList.add("d-none");
+   resultBox.classList.remove("d-none");
+
+   // Create a new list of markers that are open on the specified date
+   let listMarker = iovars.xarkers.filter(location => isOpenOnDate(location, date));
+
+   // Clear existing markers and add the new list of markers to the map
+   ioClearMarkers();
+   ioAddMarkers(listMarker);
+
+   // Update the list of locations displayed to the user
+   ioShowMoreLocations();
+}
+
+function isOpenOnDate(location, date) {
+   // Check if location or location.openingDate is not defined or if open/close dates are not present
+   if (!location || !location.openingDate || !location.openingDate.open || !location.openingDate.close) {
+      return false;
+   }
+
+   let openingDate = new Date(location.openingDate.open);
+   let closingDate = new Date(location.openingDate.close);
+
+   return date >= openingDate && date <= closingDate;
+}
+
