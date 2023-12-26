@@ -451,7 +451,7 @@ function ioFilterOpenNow() {
    ioClearMarkers();
    ioAddMarkers(listMarker);
 
-   ioShowMoreLocations();
+   ioShowMoreLocations(new Date());
 
 }
 
@@ -656,65 +656,13 @@ function ioShowSavedLocations() {
 
 function ioShowSavedLocationList(listMarker) {
    let content = "";
-   let detail_image = "";
-   let imageUrl = "";
-   let distance = "";
-   let isOpen = "";
-   let openingDate = "";
 
    if (listMarker) {
 
       listMarker = ioSortDistance(listMarker);
 
-      listMarker.forEach((location) => {
-         if (typeof location.imageIdList !== 'undefined' && typeof location.imageIdList[0] !== 'undefined') {
-            imageUrl = io_sample_url + 'backend/assets/dynamic/' + location.imageIdList[0] + '-small.jpg';
-         }
+      content = ioShowLocationList(listMarker);
 
-         if (imageUrl) {
-            detail_image = `<div class="block-thumb"><img src="${imageUrl}" alt="${location.name} Image"></div>`;
-         }
-         if (typeof location.distance !== 'undefined') {
-            distance = `<div class="distance">Distance: ${ioFormatDistance(location.distance)}</div>`;
-         }
-
-         isOpen = isOpenNow(location);
-
-         if (isOpen) {
-            isOpen = `
-            <div class="label ${isOpen}">${isOpen}</div>
-         `
-         }
-
-         openingDate = getOpeningDate(location);
-
-         if (openingDate) {
-            openingDate = `
-            <div class="opening"><strong>Opening Date: </strong>${openingDate}</div>
-         `
-         }
-
-         content += `
-         <div class="marker-item">
-            ${detail_image}
-            <div class="block-body">
-               <div class="head">
-                  <h5 class="mr-2">${location.name}</h5>
-                  ${isOpen}
-               </div>
-               <div>${location.address}</div>
-               ${distance}
-               ${openingDate}
-               <div class="mt-3">
-                  <button class="btn btn-round" onclick="ioShowMarkerDetail(${location.id})">
-                     <i class="fa-solid fa-magnifying-glass-location mr-1"></i>
-                     View Detail
-                  </button>
-               </div>
-            </div>
-         </div>
-         `;
-      })
    } else {
       content = `
          <div class="no-data">
