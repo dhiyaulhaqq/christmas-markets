@@ -56,7 +56,7 @@
                 <span class="close-btn" onclick="ioCloseModal()"><i class="fa-solid fa-xmark"></i></span>
                 <form>
                     <div class="form-group">
-                        <label for="date">Date</label>
+                        <label for="pick-date">Date</label>
                         <input type="text" id="pick-date" class="form-control" placeholder="Select Date..">
                     </div>
                     <button type="button" id="filter-btn" class="btn btn-round">Apply Filter</button>

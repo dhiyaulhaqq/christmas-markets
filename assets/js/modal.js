@@ -14,11 +14,11 @@ function ioCloseModal() {
 }
 
 // Close the modal if the user clicks outside the modal content
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
     if (event.target === pickDateModal) {
         pickDateModal.classList.add("d-none");
     }
-}
+})
 
 flatpickr(pickDate, {});
 

@@ -296,7 +296,8 @@ function ioResetMap() {
 }
 
 // show more location button click function
-function ioShowMoreLocations() {
+function ioShowMoreLocations(date) {
+   let filterBy = "";
    landingBox.classList.add("d-none");
    resultBox.classList.remove("d-none");
 
@@ -310,11 +311,37 @@ function ioShowMoreLocations() {
    map.setCenter(center);
    map.setZoom(6);
 
-   let content = "";
-
    let listMarker = iovars.xarkers;
 
-   content = ioShowLocationList(listMarker);
+   let content = ioShowLocationList(listMarker);
+
+   if (!content) {
+      content = `
+         <div class="no-data">
+            <p>No locations found!</p>
+         </div>
+      `
+   }
+
+   let placeName = iovars.init_loc_name;
+
+   if (typeof iovars.search_loc.formatted_address != 'undefined') {
+      placeName = iovars.search_loc.formatted_address;
+   }
+
+   if (date) {
+      filterBy = `<span class="ml-2">${formatDate(date)}</span>`;
+   }
+
+   content = `
+      <div class="heading">
+         <h4>Christmas Markets near ${placeName}</h4>
+         ${filterBy}
+      </div>
+      <div class="marker-list scroll-y">
+         ${content}
+      </div>
+   `
 
    markerDetail.innerHTML = content;
 }
@@ -326,7 +353,6 @@ function ioShowLocationList(listMarker) {
    let distance = "";
    let isOpen = "";
    let openingDate = "";
-   let placeName = "";
 
    listMarker.forEach((location) => {
       if (typeof location.imageIdList !== 'undefined' && typeof location.imageIdList[0] !== 'undefined') {
@@ -381,21 +407,6 @@ function ioShowLocationList(listMarker) {
          </div>
          `;
    })
-
-   placeName = iovars.init_loc_name;
-
-   if (typeof iovars.search_loc.formatted_address != 'undefined') {
-      placeName = iovars.search_loc.formatted_address;
-   }
-
-   content = `
-      <div class="heading">
-         <h4>Christmas Markets near ${placeName}</h4>
-      </div>
-      <div class="marker-list scroll-y">
-         ${content}
-      </div>
-   `
 
    return content;
 }
@@ -481,9 +492,21 @@ function getOpeningDate(location) {
       return '';
    }
    let openingDate = new Date(location.openingDate.open);
+   openingDate = formatDate(openingDate);
    let closingDate = new Date(location.openingDate.close);
+   closingDate = formatDate(closingDate);
 
-   return openingDate.toLocaleDateString("en-US", options) + " - " + closingDate.toLocaleDateString("en-US", options);
+   return openingDate + " - " + closingDate;
+}
+
+function formatDate(date) {
+   const options = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+   };
+   return date.toLocaleDateString("en-US", options)
 }
 
 function ioSetupAutoComplete() {
@@ -728,7 +751,7 @@ function ioFilterByDate(date) {
    ioAddMarkers(listMarker);
 
    // Update the list of locations displayed to the user
-   ioShowMoreLocations();
+   ioShowMoreLocations(date);
 }
 
 function isOpenOnDate(location, date) {
