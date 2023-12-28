@@ -318,7 +318,7 @@ function ioShowMoreLocations(date) {
    if (!content) {
       content = `
          <div class="no-data">
-            <p>No locations found!</p>
+            <p>No Christmas Market found with the selected filter</p>
          </div>
       `
    }
